@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/Black-House.github.io/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/Black-House.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/Black-House.github.io/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Black-House.github.io/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/Black-House.github.io/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/Black-House.github.io/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/Black-House.github.io/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="python爬虫,">
+
+
+
+
+
+  <link rel="alternate" href="/Black-House.github.io/atom.xml" title="Richard's bloge" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="注：不要左顾右盼。慢慢积累，慢慢写吧。毕竟除了这样单调的努力，我什么也做不了。">
+<meta name="keywords" content="python爬虫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python爬虫篇(一)">
+<meta property="og:url" content="https://black-house.github.io/2018/11/05/python-spider-one/index.html">
+<meta property="og:site_name" content="Richard&#39;s bloge">
+<meta property="og:description" content="注：不要左顾右盼。慢慢积累，慢慢写吧。毕竟除了这样单调的努力，我什么也做不了。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://phi87jf30.bkt.clouddn.com/jianchi.jpg">
+<meta property="og:image" content="http://phi87jf30.bkt.clouddn.com/%E7%88%AC%E8%99%AB%E6%B5%81%E7%A8%8B.png">
+<meta property="og:image" content="http://phi87jf30.bkt.clouddn.com/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%AC%A6%E5%8F%B7%E8%A1%A8%E6%A0%BC.png">
+<meta property="og:updated_time" content="2018-11-15T08:26:46.818Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python爬虫篇(一)">
+<meta name="twitter:description" content="注：不要左顾右盼。慢慢积累，慢慢写吧。毕竟除了这样单调的努力，我什么也做不了。">
+<meta name="twitter:image" content="http://phi87jf30.bkt.clouddn.com/jianchi.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/Black-House.github.io/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://black-house.github.io/2018/11/05/python-spider-one/">
+
+
+
+
+
+  <title>Python爬虫篇(一) | Richard's bloge</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/Black-House.github.io/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Richard's bloge</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">my output</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/Black-House.github.io/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首&emsp;&emsp;页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/Black-House.github.io/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于博主
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/Black-House.github.io/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标&emsp;&emsp;签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/Black-House.github.io/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分&emsp;&emsp;类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/Black-House.github.io/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归&emsp;&emsp;档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/Black-House.github.io/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/Black-House.github.io/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            站内搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://black-house.github.io/Black-House.github.io/2018/11/05/python-spider-one/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Richard">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://phi87jf30.bkt.clouddn.com/timg_%E5%89%AF%E6%9C%AC2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Richard's bloge">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python爬虫篇(一)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-05T09:47:57+08:00">
+                2018-11-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/Black-House.github.io/2018/11/05/python-spider-one/" class="leancloud_visitors" data-flag-title="Python爬虫篇(一)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 <span>℃</span>
+   	         </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.5k字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  15分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+	  
+  
+
+      
+        <blockquote>
+<p><strong>注：不要左顾右盼。慢慢积累，慢慢写吧。毕竟除了这样单调的努力，我什么也做不了。 </strong></p>
+</blockquote>
+<p><img src="http://phi87jf30.bkt.clouddn.com/jianchi.jpg" alt=""><br><a id="more"></a></p>
+<ul>
+<li>爬虫原理简介</li>
+<li></li>
+</ul>
+<h1 id="爬虫原理简介"><a href="#爬虫原理简介" class="headerlink" title="爬虫原理简介"></a>爬虫原理简介</h1><p>   爬虫主要分为三个过程<br><img src="http://phi87jf30.bkt.clouddn.com/%E7%88%AC%E8%99%AB%E6%B5%81%E7%A8%8B.png" alt=""><br>   <strong>1. 针对对象发送请求</strong><br>   这里的对象主要分为静态网页和动态网页。<br>静态网页通过get, post方法就可以搞定，如：豆瓣、糗事百科、腾讯新闻等<br>动态网页主要会遇到Ajax异步加载的网页. 解决方法：1. requests.get方法解决，点击下方的加载更多，然后在network中找到它</p>
+<p>的API请求. 2. selenium模拟浏览器法。个人认为在异步加载的动态网页中通过selenium方法会更加的方便，后面都会介绍具体的案例。<br>   <strong>2. 获取响应内容</strong><br>  如果服务器能正常200响应, 则会得到一个Response<br>   <strong>3. 解析内容</strong><br>  解析html内容： 正则表达式(re模块)，第三方解析库如 Beautifulsoup,Xpath, pyquery等<br>解析json模块: 这种一般是通过抓包工具获得的数据包<br>解析二进制数据： 以wb的方式写入文件<br>   <strong>4. 保存数据</strong><br>文件形式：纯文本，json, xml等<br>关系型数据库:Mysql, SqlServer<br>非关系型数据库:Mongodb, Ridis</p>
+<h1 id="内容解析问题的方法"><a href="#内容解析问题的方法" class="headerlink" title="内容解析问题的方法"></a>内容解析问题的方法</h1><p><strong>Xpath, find_all, find以及正则表达式</strong></p>
+<ol>
+<li><p>XPath:<br>是一门在XML文档中查找信息的语言。 Xpath可以用来在XML文档中对元素和属性进行遍历。<br>在Xpath中，有七种类型的节点：元素、属性、文本、命名空间、处理指令、注释以及文档（根）节点。XML文档是被作为节点树来对待的。树的根被称为文档节点或者根节点。<br><strong>绝对路径：从根目录开始一级一级的查找，相对路径：从任意制定的位置开始查找</strong><br>应用代码: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">driver=webdriver.Chrome()</span><br><span class="line">driver.implicitly_wait(10)</span><br><span class="line">driver.get(url3)</span><br><span class="line">time.sleep(3)</span><br><span class="line">html=etree.HTML(driver.page_source)</span><br><span class="line">all_img_list=[]</span><br><span class="line">img_group_list = html.xpath(&quot;//img[contains(@id,&apos;J_normal&apos;)]&quot;)</span><br><span class="line">print(len(img_group_list))</span><br><span class="line">for img_group in img_group_list:</span><br><span class="line">   img_of_group = img_group.xpath(&quot;.//@data-original | .//@data-img-back | .//@data-img-side&quot;)</span><br><span class="line">   print(img_of_group)</span><br><span class="line">   all_img_list.append(img_of_group[0])</span><br><span class="line">print(len(all_img_list))</span><br><span class="line">print(all_img_list)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>find_all<br>find_all(tag, attributes, recursive, text, limit, keywords)</p>
+</li>
+</ol>
+<ul>
+<li>tage: 标签 返回一个列表</li>
+<li>attrs: 属性参数 是用一个python字典封装一个标签的若干属性和对应的属性值，注意是对一个标签的属性，所以一定要指明这个标签 <blockquote>
+<p>soup.find(attrs={‘data-custom’:’xxx’})以及 soup.find(attrs={‘class’:’xxx’})<br>链接：<a href="https://www.jianshu.com/p/ef2f246cae46" target="_blank" rel="noopener">https://www.jianshu.com/p/ef2f246cae46</a></p>
+</blockquote>
+</li>
+</ul>
+<p><strong>注：find与find_all类似，主要区别在与find_all返回的是列表</strong></p>
+<ol start="3">
+<li>正则表达式中常用的字符含义<br><img src="http://phi87jf30.bkt.clouddn.com/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%AC%A6%E5%8F%B7%E8%A1%A8%E6%A0%BC.png" alt=""></li>
+</ol>
+<p><em>来源: <a href="https://www.jb51.net/article/65286.htm" target="_blank" rel="noopener">https://www.jb51.net/article/65286.htm</a></em></p>
+<p>（1）数量词的贪婪模式与非贪婪模式<br>正则表达式通常用于在文本中查找匹配的字符串。Python里数量词默认是贪婪的（在少数语言里也可能是默认非贪婪），总是尝试匹配尽可能多的字符；非贪婪的则相反，总是尝试匹配尽可能少的字符。例如：正则表达式”ab<em>”如果用于查找”abbbc”，将找到”abbb”。而如果使用非贪婪的数量词”ab</em>?”，将找到”a”。<br>注：我们一般使用非贪婪模式来提取。<br>（2）反斜杠问题<br>与大多数编程语言相同，正则表达式里使用”\”作为转义字符，这就可能造成反斜杠困扰。假如你需要匹配文本中的字符”\”，那么使用编程语言表示的正则表达式里将需要4个反斜杠”\\”：前两个和后两个分别用于在编程语言里转义成反斜杠，转换成两个反斜杠后再在正则表达式里转义成一个反斜杠。<br>Python里的原生字符串很好地解决了这个问题，这个例子中的正则表达式可以使用r”\”表示。同样，匹配一个数字的”\d”可以写成r”\d”。有了原生字符串，妈妈也不用担心是不是漏写了反斜杠，写出来的表达式也更直观勒。</p>
+<p><strong>re的核心函数</strong><br>compile()函数</p>
+<ul>
+<li>函数定义：compile(pattern, flag=0)</li>
+<li>函数描述：编译正则表达式pattern,然后返回正则表达式对象</li>
+<li>pattern=re.compile()  预编译<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">re.match(pattern, string, flags=0)</span><br><span class="line">如果字符串的开头能匹配正则表达式，返回对应的match的对象，否则None</span><br><span class="line">re.search(pattern, string, flags=0)</span><br><span class="line">在字符串中查找，是否能匹配正则表达式，若是，返回对应的match对象，否则返回None</span><br><span class="line">re.split(pattern, string, maxsplit=0, flags=0)</span><br><span class="line">使用正则表达式分离字符串。如果括号将正则表达式括起来，那么匹配的字符串也会被列入到list中返回。Maxsplit是分离的次数，maxsplit=1表示分离一次，默认0,不限次数</span><br><span class="line">re. findall() </span><br><span class="line">返回的是list</span><br><span class="line">re.sub( pattern ,repl ,string,count=0,): 替换</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>匹配对象的方法</strong><br>group方法</p>
+<ul>
+<li>方法定义：group(num=0)</li>
+<li>方法描述：返回这个匹配对象，或者特殊编号的字组<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line">s1 = &apos;我12345+abcde&apos;</span><br><span class="line">pattern字符串前加 “ r ” 表示原生字符串</span><br><span class="line">pattern = r&apos;\w+&apos;</span><br><span class="line">pattern_compile = re.compile(pattern)</span><br><span class="line">返回匹配的字符串</span><br><span class="line">result1 = re.match(pattern_compile, s1).group()</span><br><span class="line">返回匹配开始的位置</span><br><span class="line">result2 = re.match(pattern_compile, s1).start() </span><br><span class="line">返回匹配结束的位置</span><br><span class="line">result3 = re.match(pattern_compile, s1).end() </span><br><span class="line">返回一个元组包含匹配 (开始,结束) 的位置</span><br><span class="line">result4 = re.match(pattern_compile, s1).span() </span><br><span class="line">print(result1)</span><br><span class="line">print(result2)</span><br><span class="line">print(result3)</span><br><span class="line">print(result4)</span><br><span class="line">我12345</span><br><span class="line">0</span><br><span class="line">6</span><br><span class="line">(0, 6)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>groups方法</strong></p>
+<ul>
+<li>方法定义：groups(default=None)</li>
+<li>方法描述： 返回一个含有所有匹配子组的元组，匹配失败则返回空元组</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line">s1 = &apos;我12345+abcde&apos;</span><br><span class="line">pattern字符串前加 “ r ” 表示原生字符串</span><br><span class="line">pattern = r&apos;(\w+)\+(\w+)&apos;</span><br><span class="line">pattern_compile = re.compile(pattern)</span><br><span class="line">返回含有所有子组的元组</span><br><span class="line">result1 = re.search(pattern_compile, s1).groups()</span><br><span class="line">print(result1)</span><br><span class="line">(&apos;我12345&apos;, &apos;abcde&apos;)</span><br></pre></td></tr></table></figure>
+<p>最后附加一个静态网页的数据抓取的案例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">from bs4 import BeautifulSoup</span><br><span class="line">import requests</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">url = &apos;https://knewone.com/discover?page=&apos;</span><br><span class="line">def get_page(url, data=None):</span><br><span class="line">    res = requests.get(url)</span><br><span class="line">    soup = BeautifulSoup(res.text, &apos;lxml&apos;)</span><br><span class="line">    images = soup.select(&apos;a.cover-inner &gt; img&apos;)</span><br><span class="line">    titles = soup.select(&apos;section.content &gt; h4 &gt; a&apos;)</span><br><span class="line">    links = soup.select(&apos;section.content &gt; h4 &gt; a&apos;)</span><br><span class="line">    if data==None:</span><br><span class="line">        for image, title, link in zip(images, titles, links):</span><br><span class="line">         #zip() 函数用于将可迭代的对象作为参数，将对象中对应的元素打包成一个个元组，然后返回由这些元组组成的列表。</span><br><span class="line">            data = &#123;&apos;image&apos;: image.get(&apos;src&apos;),</span><br><span class="line">                    &apos;title&apos;: title.get(&apos;title&apos;),</span><br><span class="line">                    &apos;link&apos;: link.get(&apos;href&apos;)</span><br><span class="line">                    &#125;</span><br><span class="line">            print(data)</span><br><span class="line">def get_more_page(start, end):</span><br><span class="line">    for one in range(start, end):</span><br><span class="line">        get_page(url + str(one))</span><br><span class="line">        time.sleep(2)</span><br><span class="line"></span><br><span class="line">get_more_page(5, 15)</span><br></pre></td></tr></table></figure>
+<h1 id="Ajax异步加载动态页面问题"><a href="#Ajax异步加载动态页面问题" class="headerlink" title="Ajax异步加载动态页面问题"></a>Ajax异步加载动态页面问题</h1><ol>
+<li>获取数据源问题 – 模拟登录, 异步加载</li>
+<li>数据解析问题    </li>
+</ol>
+<p>正如上篇所提到的处理该问题主要有两种方法，在本节我们重点介绍第二种方法，因为我认为通过selenium模拟浏览器可以方便快速的解决该问题。</p>
+<h2 id="Selenium"><a href="#Selenium" class="headerlink" title="Selenium"></a>Selenium</h2><p>首先我们来介绍下selenium<br><em>来源: <a href="https://blog.csdn.net/u010986776/article/details/79266448" target="_blank" rel="noopener">https://blog.csdn.net/u010986776/article/details/79266448</a>)</em></p>
+<ul>
+<li>通常反爬的手段的方向，都是识别非浏览器客户端，而selenium所做的事情，恰恰是驱动真正的浏览器去执行请求和操作，只不过信号不是来源于鼠标，而是来源于selenium的API（selenium本是一个自动化的测试工具）</li>
+<li>自然人用户能做的一切，selenium几乎都驱动浏览器去做，无论是否界面，包括输入、点击、滑动，等等。</li>
+<li>然而到底是鼠标操作的浏览器发起请求还是API，对于服务端来说，是没有任何差别的</li>
+<li>早期的时候流行的组合是selenium+phantomjs而不是selenium+chrome浏览器驱动，因为phantomjs是一款没有界面的浏览器，业界称作无头浏览器（headless），由于没有界面和渲染，其运行要大大优于有界面的浏览器，后来chrome和firefox也推出了无头模式，且其运行速度很流畅，phantomjs就告终了。</li>
+</ul>
+<h2 id="python利用selenium模拟浏览器抓取异步加载的页面信息"><a href="#python利用selenium模拟浏览器抓取异步加载的页面信息" class="headerlink" title="python利用selenium模拟浏览器抓取异步加载的页面信息"></a>python利用selenium模拟浏览器抓取异步加载的页面信息</h2><h3 id="获取数据源"><a href="#获取数据源" class="headerlink" title="获取数据源"></a>获取数据源</h3><blockquote>
+<p>模拟启动火狐/谷歌浏览器<br>from selenium import webdriver<br>调用键盘的按键操作需要引入keys包<br>from selenium.webdriver.common.keys import Keys<br>导入chrome项<br>from selenium.webdiver.chrome.options import Options<br>模拟鼠标动作<br>from selenuim.webdriver import ActionChains</p>
+</blockquote>
+<ol>
+<li>启动浏览器，有头模式<blockquote>
+<p>Drive=webdiver.Chrome()<br>Driver.get(url)<br>print Driver.page_source<br>Driver.close()  关闭浏览器</p>
+</blockquote>
+</li>
+<li>创建chrome浏览器驱动，无头模式<blockquote>
+<p>from selenium.webdriver.chrome.options import Options<br>chrome_options=Options()<br>chrome_options.add_argument(“–headless”)<br>driver=webdriver.Chrome(chrome_options=chrome_options)<br>driver.implicity_wait(10)<br>driver.get(url)</p>
+</blockquote>
+</li>
+</ol>
+<p>其实在使用selenium模块处理异步加载问题主要使用以下代码,自动的将滚动条拉下来<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">模拟谷歌浏览器滚动条滚动</span><br><span class="line">for i in range(1, 6):</span><br><span class="line">   js=&quot;var q=document.body.scrollTop=100000&quot;</span><br><span class="line">   driver.execute_script(js)</span><br><span class="line">   print(&apos;=====================================&apos;)</span><br><span class="line">   time.sleep(3)</span><br><span class="line">   driver.execute_script(&quot;window.scrollTo(0, document.body.scrollHeight);&quot;)</span><br><span class="line">   time.sleep(2)</span><br></pre></td></tr></table></figure></p>
+<p><strong>除此之外使用selenium模块解决的更多的还有反爬虫中的验证码登录问题</strong></p>
+<h3 id="数据源的解析与获取"><a href="#数据源的解析与获取" class="headerlink" title="数据源的解析与获取"></a>数据源的解析与获取</h3><p>选择器（来源：<a href="https://www.cnblogs.com/yxi-liu/p/selenium.html）" target="_blank" rel="noopener">https://www.cnblogs.com/yxi-liu/p/selenium.html）</a></p>
+<ol>
+<li>find_element_by_id  按照id 查找</li>
+<li>find_element_by_link_text  按照里面的文本查找</li>
+<li>find_element_by_partial_link_text 按照文本的部分模糊查找</li>
+<li>find_element_by_tag_name 按照标签名</li>
+<li>find_element_by_class_name 按照类名</li>
+<li>find_element_by_name  按照name的属性查找</li>
+<li>find_element_by_css_selector  css选择器的方式查找</li>
+<li>find_element_by_xpath    按照路径茶渣</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from lxml import etree</span><br><span class="line">html=etrr.HTML(driver.page_source)</span><br><span class="line">all_img_list=[]</span><br><span class="line">img_group_list = html.xpath(&quot;//img[contains(@id,&apos;J_normal&apos;)]&quot;)</span><br><span class="line">print(len(img_group_list))</span><br><span class="line">for img_group in img_group_list:</span><br><span class="line">    img_of_group = img_group.xpath(&quot;.//@data-original | .//@data-img-back | .//@data-img-side&quot;)</span><br><span class="line">    print(img_of_group)</span><br><span class="line">    all_img_list.append(img_of_group[0])</span><br><span class="line">    print(len(all_img_list))</span><br><span class="line">    print(all_img_list)</span><br></pre></td></tr></table></figure>
+<p><strong>具体案例可见后文中的“QQ邮件的自动发送”</strong></p>
+<h1 id="数据存储问题"><a href="#数据存储问题" class="headerlink" title="数据存储问题"></a>数据存储问题</h1><p>正如上文所说的将爬取下来的数据存储主要有三种方式：</p>
+<ol>
+<li>存储到txt文件中</li>
+<li>存储到csv,excel文件中</li>
+<li>存储到mysql,mongodb数据库中</li>
+</ol>
+<h2 id="数据存储到txt文件中"><a href="#数据存储到txt文件中" class="headerlink" title="数据存储到txt文件中"></a>数据存储到txt文件中</h2><p>将数据存储到txt文件中基本上都是逐条存储进去<br>方法1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def save_to_txt(item):</span><br><span class="line">with open(&apos;C:\\Users\\lenovo\\Desktop\\1\\刘睿\\狄仁杰.txt&apos;, &apos;a&apos;, encoding=&apos;utf-8&apos;) as f:</span><br><span class="line">    f.write(item[&apos;date&apos;] + &apos;,&apos; + item[&apos;nickname&apos;] + &apos;,&apos; + item[&apos;city&apos;] + &apos;,&apos; + str(item[&apos;rate&apos;]) + &apos;,&apos; + item[&apos;comment&apos;] + &apos;\n&apos;)</span><br><span class="line">    print(&apos;ok&apos;)</span><br></pre></td></tr></table></figure>
+<p>方法2<br>使用json.dumps方法是将字典转化成str然后写入txt中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">def parse_one_page(html):</span><br><span class="line">    pattern = re.compile(&quot;&lt;dd&gt;.*? board_index.*?&gt;(.*?)&lt;/i&gt;.*?data-src=&quot;(.*?)&quot;.*?name.*?a.*?&gt;(.*?)&lt;/a&gt;.*?star.*?(.*?)&lt;/p&gt;.*?releasetime.*?&gt;(.*?)&lt;/p&gt;.*?integer.*?&gt;(.*?)&lt;/i&gt;.*?fraction.*?&gt;(.*?)&lt;/i&gt;.*?&lt;/dd&gt;&quot;,re.S)</span><br><span class="line">    items =re.findall(pattern,html)  #生成一个生成器通过for in从生成器中调取数据</span><br><span class="line">    for item in items:</span><br><span class="line">        yield&#123;                 &apos;&apos;&apos;yield 是一个类似 return 的关键字，只是这个函数返回的是个生成器</span><br><span class="line">        当你调用这个函数的时候，函数内部的代码并不立马执行 ，这个函数只是返回一个生成器对象&apos;&apos;&apos;</span><br><span class="line">当你使用for进行迭代的时候，函数中的代码才会执行</span><br><span class="line">              &quot;index&quot;:item[0],</span><br><span class="line">              &quot;image&quot;:item[1],</span><br><span class="line">              &quot;title&quot;:item[2],</span><br><span class="line">              &quot;actor&quot;:item[3].strip()[3:],</span><br><span class="line">              &quot;time&quot;:item[4].strip()[5:],</span><br><span class="line">              &quot;score&quot;:item[5]+item[6]              </span><br><span class="line">              &#125;</span><br><span class="line">def write_to_file(content):</span><br><span class="line">    with open(&quot;result.text&quot;,&quot;a&quot;,encoding=&quot;utf-8&quot;) as f:#a相当于append表示将文件追加写入文末</span><br><span class="line">        f.write(json.dumps(content,ensure_ascii=False) + &quot;\n&quot;)#dumps是将dict转化成str格式，loads是将str转化成dict格式。</span><br></pre></td></tr></table></figure>
+<p>方法3</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">def get_btc_dt(pages):</span><br><span class="line">	f0 = open(&apos;title.txt&apos;, &apos;w&apos;)</span><br><span class="line">	f1 = open(&apos;time.txt&apos;, &apos;w&apos;)</span><br><span class="line">	for page in range(1, pages+1):</span><br><span class="line">	url = &apos;http://www.8btc.com/bitcoin/page/&#123;&#125;&apos;.format(str(page))</span><br><span class="line">	web_data = requests.get(url, headers=headers)</span><br><span class="line">	time.sleep(2)</span><br><span class="line">	soup = BeautifulSoup(web_data.text, &apos;lxml&apos;)</span><br><span class="line">	titles = soup.select(&apos;div.article-content.clearfix &gt; div.article-title.visible-md.visible-lg &gt; a&apos;)</span><br><span class="line">	times = soup.select(&apos;div.article-content.clearfix &gt; div.article-info.clearfix &gt; span.pull-left.visible-sm.visible-xs&apos;)</span><br><span class="line">	for time, title in zip(times, titles):</span><br><span class="line">	    time = time.text</span><br><span class="line">	    title = title.text</span><br><span class="line">	    print(time)</span><br><span class="line">	    f0.write(time)</span><br><span class="line">	    f0.write(&apos;\n&apos;)</span><br><span class="line">	    f1.write(title)</span><br><span class="line">	    f1.write(&apos;\n&apos;)</span><br><span class="line">	f0.close()</span><br><span class="line">	f1.close()</span><br></pre></td></tr></table></figure>
+<h2 id="存储到csv-excel文件中"><a href="#存储到csv-excel文件中" class="headerlink" title="存储到csv,excel文件中"></a>存储到csv,excel文件中</h2><p>主要是将由字典结构&amp;其内值为列表的数据通过pandas的DataFrame存入csv和excel中</p>
+<p>方法1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">datalength = len(data)</span><br><span class="line">Date_d = np.zeros(datalength)</span><br><span class="line">Open = np.zeros(datalength)</span><br><span class="line">High = np.zeros(datalength)</span><br><span class="line">Low = np.zeros(datalength)</span><br><span class="line">Close = np.zeros(datalength)</span><br><span class="line">Volume = np.zeros(datalength)</span><br><span class="line">for i in range(len(data)):</span><br><span class="line">    Date_d[i] = data[i][0]</span><br><span class="line">    Open[i] = data[i][1]</span><br><span class="line">    High[i] = data[i][2]</span><br><span class="line">    Low[i] = data[i][3]</span><br><span class="line">    Close[i] = data[i][4]</span><br><span class="line">    Volume[i] = data[i][5]</span><br><span class="line"></span><br><span class="line">Date_d = Date_d / 1000000000</span><br><span class="line">df = pd.DataFrame(&#123;&apos;Close&apos;: Close, &apos;Date_d&apos;: Date_d,&apos;Open&apos;:Open,&apos;High&apos;:High,&apos;Low&apos;:Low,&apos;Volume&apos;:Volume&#125;)</span><br><span class="line">df.to_csv(&apos;C:\\Users\\lenovo\Desktop\\btc_yunbi.csv&apos;)</span><br></pre></td></tr></table></figure>
+<p>方法2：<br>将由列表组成的,其内是字典的数据,可以将数据一条一条插入，也可以一起插入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">result_list = []</span><br><span class="line">for item in item_list:</span><br><span class="line">    result_dict = &#123;&#125;</span><br><span class="line">    result_dict[&apos;title&apos;] = item[&apos;title&apos;].replace(&apos;&lt;span class=H&gt;&apos;, &apos;&apos;).replace(&apos;&lt;/span&gt;&apos;, &apos;&apos;)</span><br><span class="line">    result_dict[&apos;url&apos;] = &apos;http:&apos; + item[&apos;detail_url&apos;]</span><br><span class="line">    result_dict[&apos;location&apos;] = item[&apos;item_loc&apos;]</span><br><span class="line">    result_dict[&apos;shop_name&apos;] = item[&apos;nick&apos;]</span><br><span class="line">    result_dict[&apos;原价&apos;] = item[&apos;reserve_price&apos;]</span><br><span class="line">    result_dict[&apos;现价&apos;] = item[&apos;view_price&apos;]</span><br><span class="line">    print(result_dict)</span><br><span class="line">    result_list.append(result_dict)</span><br><span class="line">return result_list</span><br><span class="line">def write_data(self, result_list):</span><br><span class="line">with open(&apos;result.csv&apos;, &apos;w&apos;, encoding=&apos;UTF-8&apos;) as f:</span><br><span class="line">    writer = csv.DictWriter(f, fieldnames=[&apos;title&apos;, &apos;原价&apos;, &apos;现价&apos;,&apos;shop_name&apos;, &apos;location&apos;,  &apos;url&apos;])</span><br><span class="line">    writer.writeheader()</span><br><span class="line">    writer.writerows(result_list)</span><br></pre></td></tr></table></figure></p>
+<h2 id="存储到mysql-mongodb数据库中"><a href="#存储到mysql-mongodb数据库中" class="headerlink" title="存储到mysql, mongodb数据库中"></a>存储到mysql, mongodb数据库中</h2><p>先在mysql数据库中建立好表格(表头以及类型)然后将数据逐条插入数据库中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">conn = pymysql.connect(host=&quot;127.0.0.1&quot;, user=&quot;root&quot;, passwd=&quot;341124&quot;, db=&quot;jd&quot;, charset=&quot;utf8&quot;)</span><br><span class="line">使用cursor()的方法获取操作游标</span><br><span class="line">cur = conn.cursor()</span><br><span class="line">for i in range(0, len(item[&apos;title&apos;])):</span><br><span class="line">    try:</span><br><span class="line">        cur.execute(&quot;INSERT INTO jingjing(title,href) VALUES (%s, %s)&quot;, [item[&apos;title&apos;][i], &quot;http:&quot;+item[&apos;href&apos;][i]])</span><br><span class="line">        conn.commit()</span><br><span class="line">        print(&apos;ok&apos;)</span><br><span class="line">    except Exception as e:</span><br><span class="line">        #错误回滚</span><br><span class="line">        conn.rollback()</span><br><span class="line">    conn.close() </span><br><span class="line">    print(&apos;ok&apos;)</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">
+            -------------本文结束
+            <i class="fa fa-paw"></i>
+            感谢您的阅读-------------
+        </div>
+    
+</div>
+
+  
+</div>
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/Black-House.github.io/tags/python爬虫/" rel="tag"># python爬虫</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Black-House.github.io/2018/10/30/第一篇博客/" rel="next" title="第一篇博客">
+                <i class="fa fa-chevron-left"></i> 第一篇博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Black-House.github.io/2018/11/05/python_scrapy/" rel="prev" title="python爬虫篇(二)">
+                python爬虫篇(二) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="http://phi87jf30.bkt.clouddn.com/timg_%E5%89%AF%E6%9C%AC2.jpg" alt="Richard">
+            
+              <p class="site-author-name" itemprop="name">Richard</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/Black-House.github.io/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/Black-House.github.io/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Black-House" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1159520248@@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#爬虫原理简介"><span class="nav-number">1.</span> <span class="nav-text">爬虫原理简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内容解析问题的方法"><span class="nav-number">2.</span> <span class="nav-text">内容解析问题的方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ajax异步加载动态页面问题"><span class="nav-number">3.</span> <span class="nav-text">Ajax异步加载动态页面问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Selenium"><span class="nav-number">3.1.</span> <span class="nav-text">Selenium</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python利用selenium模拟浏览器抓取异步加载的页面信息"><span class="nav-number">3.2.</span> <span class="nav-text">python利用selenium模拟浏览器抓取异步加载的页面信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取数据源"><span class="nav-number">3.2.1.</span> <span class="nav-text">获取数据源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据源的解析与获取"><span class="nav-number">3.2.2.</span> <span class="nav-text">数据源的解析与获取</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据存储问题"><span class="nav-number">4.</span> <span class="nav-text">数据存储问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据存储到txt文件中"><span class="nav-number">4.1.</span> <span class="nav-text">数据存储到txt文件中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储到csv-excel文件中"><span class="nav-number">4.2.</span> <span class="nav-text">存储到csv,excel文件中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储到mysql-mongodb数据库中"><span class="nav-number">4.3.</span> <span class="nav-text">存储到mysql, mongodb数据库中</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="heart">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Richard</span>
+
+  
+</div>
+
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>人
+</span>
+</div>
+
+
+<span class="post-meta-divider">|</span>
+
+<span id="busuanzi_container_site_pv">
+   总访问量:<span id="busuanzi_value_site_pv"></span>次
+</span>
+
+<span class="post-meta-divider">|</span>
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+<span class="post-meta-divider">|</span>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共11.4k字</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/Black-House.github.io/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/Black-House.github.io/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/Black-House.github.io/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/Black-House.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/Black-House.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/Black-House.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/Black-House.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/Black-House.github.io/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/Black-House.github.io/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/Black-House.github.io/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/Black-House.github.io/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/Black-House.github.io/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/Black-House.github.io/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/Black-House.github.io/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/Black-House.github.io/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("QF9amq9wnlzfDa8x55wbmK0X-gzGzoHsz", "xzzUWkd8enqD42cWC6TJEnte");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+   <script type="text/javascript" color="233,233,233" opacity="0.9" zindex="-2" count="50" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-    nest.min.js"></script>
+  
+</body>
+</html>
