@@ -314,7 +314,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://black-house.github.io/Black-House.github.io/2018/10/31/第二篇博客/">
+    <link itemprop="mainEntityOfPage" href="https://black-house.github.io/Black-House.github.io/2018/11/27/python数据分析语法/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Richard">
@@ -333,7 +333,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/Black-House.github.io/2018/10/31/第二篇博客/" itemprop="url">第二篇博客</a></h1>
+                <a class="post-title-link" href="/Black-House.github.io/2018/11/27/python数据分析语法/" itemprop="url">未命名</a></h1>
         
 
         <div class="post-meta">
@@ -345,8 +345,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-31T17:39:25+08:00">
-                2018-10-31
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-27T22:04:39+08:00">
+                2018-11-27
               </time>
             
 
@@ -363,7 +363,7 @@
 
           
           
-             <span id="/Black-House.github.io/2018/10/31/第二篇博客/" class="leancloud_visitors" data-flag-title="第二篇博客">
+             <span id="/Black-House.github.io/2018/11/27/python数据分析语法/" class="leancloud_visitors" data-flag-title="">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -391,7 +391,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0字
+                  1.7k字
                 </span>
               
 
@@ -407,7 +407,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1分钟
+                  7分钟
                 </span>
               
             </div>
@@ -433,11 +433,1023 @@
 	  
         
           
-            
+            <p>#python应用篇</p>
+<p>现在公众号的案列分析主要步棸</p>
+<ol>
+<li>数据爬取</li>
+<li>数据清洗</li>
+<li>数据探索</li>
+<li>数据可视化 (pyecharts)柱状图、直方图、饼图、线状图、热力图、地理图</li>
+<li>评论的文本分析    绘制词云图</li>
+</ol>
+<h2 id="一、python数据分析语法总结–来自微信公众号文章"><a href="#一、python数据分析语法总结–来自微信公众号文章" class="headerlink" title="一、python数据分析语法总结–来自微信公众号文章"></a>一、python数据分析语法总结–来自微信公众号文章</h2><p>import pymysql<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">db = pymysql.connect(host=&apos;127.0.0.1&apos;, user=&apos;root&apos;, password=&apos;774110919&apos;, port=3306, db=&apos;maoyan&apos;)</span><br><span class="line">cursor = db.cursor()</span><br><span class="line">sql = &apos;CREATE TABLE IF NOT EXISTS films (name VARCHAR(255) NOT NULL, type VARCHAR(255) NOT NULL, country VARCHAR(255) NOT NULL, length VARCHAR(255) NOT NULL, released VARCHAR(255) NOT NULL, score VARCHAR(255) NOT NULL, people INT NOT NULL, box_office BIGINT NOT NULL, PRIMARY KEY (name))&apos;</span><br><span class="line">cursor.execute(sql)</span><br><span class="line">db.close()</span><br></pre></td></tr></table></figure></p>
+<p>创建sql表</p>
+<p>conn = pymysql.connect(host=’localhost’, user=’root’, password=’774110919’, port=3306, db=’maoyan’, charset=’utf8mb4’)<br>cursor = conn.cursor()<br>sql = “select * from films”<br>db = pd.read_sql(sql, conn)<br>从数据库选出数据表</p>
+<p>df=db.sort_values(by=”score”,ascending=False)<br>根据score标签来递减排序</p>
+<p>attr = np.array(dom[‘name’][0:10])<br>attr = [“{}”.format(i.replace(‘：致命守护者’, ‘’)) for i in attr]<br>replace(old,new,max): 使用new字符串替换old字符串，max是替换的次数</p>
+<p>month_message=groupby([‘month’]) 根据month标签来分组<br>month_com=month_message[‘month’].agg([‘count’])统计分组中同类项的数量并生成一个标签列<br>month_com.reset_index(inplace=True)通过前面的筛选之后行列序号不会再按照序号排列下来需要使用reser_index函数重新列出序号</p>
+<p>month_com_last = month_com.sort_index()<br>按照序号从小到大排列下来</p>
+<p>v1 = np.array(month_com_last[‘count’])<br>v1 = [“{}”.format(i) for i in v1]<br>先将series变成数组，然后变成列表</p>
+<p>db = pd.read_sql(sql, conn)<br>df = db.sort_values(by=”released”, ascending=False)<br>dom = df[[‘name’, ‘released’]]<br>选取DataFrame中的标签为name和released的两列</p>
+<p>db[‘sort_num_money’] = db[‘box_office’].rank(ascending=0, method=’dense’)<br>rank来进行排序</p>
+<p>apply函数<br>主要是将一个函数应用的一个DataFrame的数据中,当然这里还要注意行和列的区别<br>需要指定(axis=0每行作为数据内容项)可以省略，(axis=1,每列作为数据数据内容项)<br>如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">f=lambda x: x.max()- x.min()</span><br><span class="line">frame.apply(f)</span><br><span class="line"></span><br><span class="line">b    0.505220</span><br><span class="line">d    1.284980</span><br><span class="line">e    1.880011</span><br><span class="line">dtype: float64</span><br></pre></td></tr></table></figure></p>
+<p>df=pd.read_csv(‘air_tianjin_2017.csv’,header=None,name=[‘Date’,’m’,’b’,’a’])<br>dom=df[[‘b’,’a’]]</p>
+<p>将series转变为array再转变为list<br>v1=np.array(month_com_list[‘mean’])<br>v1=[“{}”.format(int(i)) for i in v1]</p>
+<p>##python的实际案例分析<br>python数据分析主要应用领域</p>
+<ol>
+<li>信贷风控</li>
+<li>营销分析</li>
+<li>金融量化<h3 id="大数据风险控制"><a href="#大数据风险控制" class="headerlink" title="大数据风险控制"></a>大数据风险控制</h3>从信贷风控的角度研究数据分析如何帮助公司创收？<br>信贷风控主要分为贷前、贷中、贷后三部分</li>
+</ol>
+<p><strong>1.贷前风险识别，贷中的风险监控与预警</strong><br><img src="http://phi87jf30.bkt.clouddn.com/%E7%8E%89%E8%A1%A1%E9%A3%8E%E6%8E%A7%E6%9C%8D%E5%8A%A1.jpg" alt=""></p>
+<h1 id="python-数据结构的用法"><a href="#python-数据结构的用法" class="headerlink" title="python 数据结构的用法"></a>python 数据结构的用法</h1><p>##python字符串的用法</p>
+<p>###一、字符串的拼接</p>
+<ol>
+<li>字符串的格式化(%d, %f)<br>print(‘%s %s’ % (‘hello’,’world’))<br>hello world</li>
+<li>format()拼接方式<br>简洁版<br>s1=’hello {}! my name is {}.’.format(‘world’,’python猫’)<br>print(s1)<br>hello world! my name is python猫.<br>对号入座<br>s2=’hello {0}! my name is {1}.’.format(‘world’,’python猫’)<br>print(s2)<br>hello world my name is python猫</li>
+</ol>
+<p>s3=’hello {name1}! my name is {name2}.’.format(name1=’world’,name2=’python猫’)<br>print(s2)<br>hello world! my name is python猫.</p>
+<ol start="3">
+<li><p>join()拼接方式<br>str_list=[‘hello’,’world’]<br>str_join1=’’.join(str_list)<br>print(str_join1)<br>hello world<br>str_join2=’-‘.join(str_list)<br>print(str_join2)<br>hello-world</p>
+</li>
+<li><p>f-string方式<br>name=’world’<br>myname=’python_cat’<br>words=f’hello {name}. my name is {myname}.’<br>print(words)<br>hello world. my name is python_cat</p>
+</li>
+</ol>
+<h3 id="二、-将字符串拆分"><a href="#二、-将字符串拆分" class="headerlink" title="二、 将字符串拆分"></a>二、 将字符串拆分</h3><ol>
+<li>split(a,b) a为拆分字符串, b为最大不能超过的拆分次数<br>s=’hello world’<br>s.split()  &gt;&gt;&gt; [‘hello’, ‘world’]<br>s.split(‘ ‘) &gt;&gt;&gt;[‘hello’,’world’]<br>s.split(‘  ‘) &gt;&gt;&gt;[‘hello world’]<br>s.split(‘world’)&gt;&gt;&gt;[‘hello’,]</li>
+</ol>
+<h3 id="三、字符串替换方法"><a href="#三、字符串替换方法" class="headerlink" title="三、字符串替换方法"></a>三、字符串替换方法</h3><p><img src="http://phi87jf30.bkt.clouddn.com/%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9B%BF%E6%8D%A2%E6%96%B9%E6%B3%95.jpg" alt=""></p>
+<h2 id="python列表的用法"><a href="#python列表的用法" class="headerlink" title="python列表的用法"></a>python列表的用法</h2><ol>
+<li>extend(L)： 将L中所有元素添加到对象列表中</li>
+<li>insert(i,x):在指定位置插入一个元素</li>
+<li>remove(x):删除列表中值为x的第一个元素</li>
+<li>pop():从列表中删除指定位置的元素</li>
+<li>sort():对列表中元素进行排序<br>简单排序  x=[4,6,2,1,7,9]<pre><code>x.sort()
+y=sorted(x)
+</code></pre></li>
+</ol>
+<ol start="6">
+<li>reverse():逆向排序列表</li>
+<li>count(x):返回x在列表中出现的次数</li>
+<li>a=[1,2,3,4,5]<br>del a[2]</li>
+<li>tuple([1,2,3])  –(1,2,3) 将列表转为元组</li>
+<li>enumrate()函数:使用enumrate函数可以得到值与对应的索引位置<br>for i，v in enumrate([‘tic’,’tac’,’toe’])<br>   print i,v</li>
+</ol>
+<p>###嵌套的列表推导式<br>-mat=[<br>[1,2,3],<br>[4,5,6],<br>[7,8,9],<br>]<br>-print [[row[i] for row in mat] for i in [0,1,2]]<br>-zip(*mat)<br>-[(1,4,7),(2,5,8),(3,6,9)]</p>
+<p>##python的字典方法</p>
+<ol>
+<li>clear()<br>清除字典中的所有的项<br>x.clear()</li>
+<li>copy()方法<br>获得的是浅复制的副本，如果副本替换值的时候原始字典不会改变，如果副本不是替换而是修改的时候，原始字典也会改变。</li>
+<li>deepcopy()方法   from copy import deepcopy<br>使用deepcopy的方法就不用担心副本改变造成原始字典发生改变的情况了。</li>
+<li>fromkeys()方法   使用给定的键建立新的字典<br>{}.fromkeys([‘name’,’age’])<br>{‘name’:None,’age’:None}<br>dict.fromkeys([‘name’,’age’],’unknown’)<br>{‘name’:’unknown’,’age’:’unknown’} </li>
+<li>keys和iterkeys<br>keys方法将字典中的键以列表的形式返回    iterkeys返回针对键的迭代器</li>
+<li>values和itervalues     《《《  》》》 dict<br>values方法以列表的形式返回字典中的值   itervalues返回的是迭代器<br>使用dict就可以将键-值对的字典形式还原成字典  </li>
+<li>items和iteritems方法<br>items将字典中的键值对以列表的形式返回   iteritems 返回键值对对应的迭代器</li>
+<li>pop方法<br>用来获得对应于给定键的值，然后将这个键-值对从字典中移除<br>d={‘title’: ‘python’,’url’:’http’,’spam’:0}<br>d.pop(‘spam’)<br>d   {‘title’:’python’,’url’:’http’}</li>
+<li>update方法<br>利用字典项更新另外一个字典：提供的字典中的项会被添加到旧的字典中，若有相同的键会进行覆盖<br>d={‘a’:1,’b’:2,’c’:3}<br>x={‘d’:4}<br>d.update(x)<br>d   {‘a’:1,’b’:2,’c’:3,’d’:4}</li>
+<li>序列解包<br>这里序列解包或者可迭代解包：将多个值得序列解开，然后放到变量的序列中<br>values=1,2,3<br>x,y,z=values<br>x   1   y 2  z 3</li>
+<li>popitem方法   通过popitem方法可以获取到字典的键-值对，同时也删除了字典的键-值对。<br>d={‘name’:’Robin’,’girlfriend’:’Mraion’}<br>key,value=d.popitem()</li>
+<li>while 循环<br>用来在任何条件为真的情况下重复执行一个代码块<br>name=’’<br>while not name:<br> name=raw_input(‘please enter yourname:’)<br>print ‘hello. %s!’ % name</li>
+<li>break (跳出循环)<br>break语句用来终止循环语句，哪怕循环条件没有成为False也将停止循环语句  </li>
+<li>continue语句<br>continue语句是跳出当前的循环块中的剩余语句，然后继续下一个循环。</li>
+<li>pass语句<br>pass语句其实什么也不做但是在语法上必须要站位的时候使用<br>16.列表推导式—轻量级循环<br>[x*x for x in range(10) if x%3==0]<br>[(x,y) for x in range(3) for y in range(3)]</li>
+</ol>
+
           
         
       
     </div>
+    
+    
+    
+
+    
+<div>
+  
+</div>
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://black-house.github.io/Black-House.github.io/2018/11/19/linux命令/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Richard">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://phi87jf30.bkt.clouddn.com/timg_%E5%89%AF%E6%9C%AC2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Richard's bloge">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Black-House.github.io/2018/11/19/linux命令/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-19T10:56:28+08:00">
+                2018-11-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/Black-House.github.io/2018/11/19/linux命令/" class="leancloud_visitors" data-flag-title="">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 <span>℃</span>
+   	         </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  576字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+	  
+  
+
+      
+	  
+        
+          
+            <h1 id="linux简介以及常用命令"><a href="#linux简介以及常用命令" class="headerlink" title="linux简介以及常用命令"></a>linux简介以及常用命令</h1><h2 id="linux的常用命令"><a href="#linux的常用命令" class="headerlink" title="linux的常用命令"></a>linux的常用命令</h2><ul>
+<li>文件目录操作命令</li>
+<li>压缩/解压缩命令</li>
+<li>常用系统命令</li>
+<li>文件打包命令</li>
+<li>搜索命令</li>
+<li>关机命令</li>
+</ul>
+<h3 id="文件目录操作命令"><a href="#文件目录操作命令" class="headerlink" title="文件目录操作命令"></a>文件目录操作命令</h3><p>ls:显示文件和目录列表<br>cd: 切换目录<br>pwd: 显示当前工作目录<br>mkdir: 创建工作目录<br>touch: 生成新的空文件或者更改现有文件的时间<br>cp: 复制文件或者目录<br>mv: 移动文件或者目录、文件或者目录改名<br>rm: 删除文件或者目录</p>
+<p>cat和tac:滚动显示文本文件内容</p>
+<ul>
+<li>cat: 用于从文件头到文件尾显示</li>
+<li>tac: 用于从文件尾到文件头显示</li>
+</ul>
+<p>more和less: 分屏显示文本文件内容</p>
+<ul>
+<li>more :只能从文件头到文件尾显示</li>
+<li>less: 可以使用PgUp和PgDn双向显示</li>
+</ul>
+<p>head和tail:默认显示10行内容</p>
+<ul>
+<li>head: 显示文本文件的前部的若干行</li>
+<li>tail: 显示文本文件的后部若干行</li>
+</ul>
+<p>grep: 用来从一个文件中找出匹配指定关键字的那一行，并送到标准输出。结合管道，我们通常用它来过滤搜索结果。 </p>
+<h3 id="压缩、解压缩命令"><a href="#压缩、解压缩命令" class="headerlink" title="压缩、解压缩命令"></a>压缩、解压缩命令</h3><p>gzip和gunzip: 压缩和解压缩文件或目录</p>
+<ul>
+<li>gzip: 压缩文件</li>
+<li>gunzip: 解压缩文件<br>zip和unzip:压缩和解压缩文件或目录</li>
+<li>zip: 压缩文件</li>
+<li>unzip: 解压缩文件</li>
+</ul>
+<p>bzip2和bunzip2: 压缩和解压缩文件或目录</p>
+<ul>
+<li>bzip2: 压缩文件</li>
+<li>bunzip2: 解压缩文件</li>
+</ul>
+<p>文件打包命令<br>tar: 打包和解压</p>
+<ul>
+<li>用于磁带机备份，也可以备份在一个硬盘文件上</li>
+<li>主要参数:<br> -c: 将文件备份过来<br> -v: 将过程输出<br> -x: 从一个文件中解出备份</li>
+<li>范例<ul>
+<li>打包：tar -cvf myfile.tar somedirname</li>
+<li>解包 ：tar -xvf myfile.tar</li>
+</ul>
+</li>
+</ul>
+<p>文件搜索命令<br>which: 显示一个可执行文件的完整路径—which ls<br>where is :搜索一个可执行工具及其相关配置、帮助<br>locate: 显示所有文件名以及其所在路径包含关键字段的文件与目录用法<br>find: 从指定路径下递归向下搜索文件</p>
+<p>linux的用户和用户组操作</p>
+<p>crontab<br> 每周三的时间点</p>
+<p>crontab -e -u root<br><em>/3 </em> <em> </em> <em> free -m &gt;&gt; /tmp/mem.log 
+</em>/3 <em> </em> <em> </em> date &gt;&gt; /tmp/mem.log</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+<div>
+  
+</div>
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://black-house.github.io/Black-House.github.io/2018/11/08/数据的可视化/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Richard">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://phi87jf30.bkt.clouddn.com/timg_%E5%89%AF%E6%9C%AC2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Richard's bloge">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Black-House.github.io/2018/11/08/数据的可视化/" itemprop="url">python数据的可视化</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-08T14:12:07+08:00">
+                2018-11-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/Black-House.github.io/2018/11/08/数据的可视化/" class="leancloud_visitors" data-flag-title="python数据的可视化">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 <span>℃</span>
+   	         </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2k字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+	  
+  
+
+      
+	  
+        
+          <blockquote>
+<p>没有任何的办法，只有一点点的写下去，虽然心很累，虽然不知道前面的什么，但是多记录一点总会是自己的财富，坚持吧！</p>
+</blockquote>
+<p><img src="http://phi87jf30.bkt.clouddn.com/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96.jpg" alt=""></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/Black-House.github.io/2018/11/08/数据的可视化/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+<div>
+  
+</div>
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://black-house.github.io/Black-House.github.io/2018/11/07/qq-spider/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Richard">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://phi87jf30.bkt.clouddn.com/timg_%E5%89%AF%E6%9C%AC2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Richard's bloge">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Black-House.github.io/2018/11/07/qq-spider/" itemprop="url">群发QQ邮件</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-07T13:33:36+08:00">
+                2018-11-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/Black-House.github.io/2018/11/07/qq-spider/" class="leancloud_visitors" data-flag-title="群发QQ邮件">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 <span>℃</span>
+   	         </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.3k字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  11分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+	  
+  
+
+      
+	  
+        
+          <blockquote>
+<p>多学习点实际有用的东西，让我们的生活变得更加的方便</p>
+</blockquote>
+<p><img src="http://phi87jf30.bkt.clouddn.com/qq2.jpg" alt=""><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/Black-House.github.io/2018/11/07/qq-spider/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
+    
+    
+    
+
+    
+<div>
+  
+</div>
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://black-house.github.io/Black-House.github.io/2018/11/05/python_scrapy/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Richard">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://phi87jf30.bkt.clouddn.com/timg_%E5%89%AF%E6%9C%AC2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Richard's bloge">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Black-House.github.io/2018/11/05/python_scrapy/" itemprop="url">python爬虫篇(二)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-05T20:01:02+08:00">
+                2018-11-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/Black-House.github.io/2018/11/05/python_scrapy/" class="leancloud_visitors" data-flag-title="python爬虫篇(二)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 <span>℃</span>
+   	         </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.2k字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+	  
+  
+
+      
+	  
+        
+          <p><img src="http://phi87jf30.bkt.clouddn.com/1.jpg" alt=""><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/Black-House.github.io/2018/11/05/python_scrapy/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
+    
+    
+    
+
+    
+<div>
+  
+</div>
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://black-house.github.io/Black-House.github.io/2018/11/05/python-spider-one/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Richard">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://phi87jf30.bkt.clouddn.com/timg_%E5%89%AF%E6%9C%AC2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Richard's bloge">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Black-House.github.io/2018/11/05/python-spider-one/" itemprop="url">Python爬虫篇(一)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-05T09:47:57+08:00">
+                2018-11-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/Black-House.github.io/2018/11/05/python-spider-one/" class="leancloud_visitors" data-flag-title="Python爬虫篇(一)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 <span>℃</span>
+   	         </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.5k字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  15分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+	  
+  
+
+      
+	  
+        
+          <blockquote>
+<p><strong>注：不要左顾右盼。慢慢积累，慢慢写吧。毕竟除了这样单调的努力，我什么也做不了。 </strong></p>
+</blockquote>
+<p><img src="http://phi87jf30.bkt.clouddn.com/jianchi.jpg" alt=""><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/Black-House.github.io/2018/11/05/python-spider-one/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
     
     
     
@@ -561,7 +1573,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  15字
+                  151字
                 </span>
               
 
@@ -602,13 +1614,17 @@
       
 	  
         
-          
-            <p>生活不仅眼前的苟且还有诗和远方</p>
-
-          
+          <h1 id="链接与图片"><a href="#链接与图片" class="headerlink" title="链接与图片"></a>链接与图片</h1><p><a href="http://www.jianshu.com" target="_blank" rel="noopener">简书</a><br><img src="http://phi87jf30.bkt.clouddn.com/%E9%AD%81%E6%8B%94.jpg" alt=""><br>每日一更<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/Black-House.github.io/2018/10/30/第一篇博客/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
-    </div>
+    </p></div>
     
     
     
@@ -869,7 +1885,7 @@
               
                 <a href="/Black-House.github.io/archives/">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -877,6 +1893,15 @@
 
             
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
             
 
           </nav>
@@ -973,7 +1998,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共88字</span>
+  <span class="post-count">博客全站共11.4k字</span>
 </div>
         
 
